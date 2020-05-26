@@ -9,6 +9,7 @@ const Path = require('path')
 const zlib = require('zlib');
 const readline = require('readline');
 const mongoose = require('mongoose');
+const http = require('http');
 
 const fetchPage = async (url, n) => {
     try {

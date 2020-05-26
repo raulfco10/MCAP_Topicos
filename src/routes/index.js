@@ -259,6 +259,7 @@ router.get('/fileinfo/:id', async (req, res) => {
     jsonInfo['URL'] = string[0];
     jsonInfo['Date'] = string[1];
     jsonInfo['Size'] = string[2];
+    jsonInfo['Reference'] = req.params.id;
     res.json(jsonInfo);
 });
 
@@ -271,8 +272,25 @@ router.get('/CDTFieldList/:id', async (req, res) => {
 router.post('/downloadfile', async (req, res) => {
     //const job = await Job.findById(req.params.id);
     result = await CDTExportFiles(req.body);
+    resultJSON = req.body;
+    reference = resultJSON['Reference'];
     //res.sendStatus(200);
     //const fieldListInfo = await CDTFieldList("#" + req.params.id);
+    var options = {
+        host: "127.0.0.1",
+        port: 8080,
+        path: '/resource/' + reference,
+        method: 'Get'
+      };
+      
+      http.request(options, function(res) {
+        console.log('STATUS: ' + res.statusCode);
+        console.log('HEADERS: ' + JSON.stringify(res.headers));
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+          console.log('BODY: ' + chunk);
+        });
+      }).end();
     res.json(result);
 });
 

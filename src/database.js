@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/topicos-db-app', {
+mongoose.connect('mongodb://mongo/topicos-db-app', {
     useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false     

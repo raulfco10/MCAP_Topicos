@@ -1,0 +1,28 @@
+version: '3'
+services:
+  web:
+    container_name: nodejs1
+    networks:
+      - net
+    ports:
+        - "3000:3000"
+    volumes:
+      - "vol1:/usr/src/app/HistoryFiles"
+    image: rbuenfil/node-web-app
+    depends_on:
+      - mongo
+  
+  mongo:
+    image: mongo
+    volumes:
+      - $PWD/data:/data/db
+    ports:
+      - 27017:27017
+    command: ["mongod"]
+    networks:
+      - net
+
+networks:
+  net:
+volumes:
+  vol1:

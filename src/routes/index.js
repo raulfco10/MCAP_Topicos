@@ -272,15 +272,14 @@ router.get('/CDTFieldList/:id', async (req, res) => {
 
 router.post('/downloadfile', async (req, res) => {
     //const job = await Job.findById(req.params.id);
-    result = await CDTExportFiles(req.body);
+    result =  await CDTExportFiles(req.body);
     resultJSON = req.body;
     reference = resultJSON['Reference'];
-    //res.sendStatus(200);
-    //const fieldListInfo = await CDTFieldList("#" + req.params.id);
     var options = {
-        host: "127.0.0.1",
+        //host: "localhost",
+        host: "192.168.1.75",
         port: 8080,
-        path: '/resource/' + reference,
+        path: '/resource?reference=' + reference,
         method: 'Get'
       };
       
@@ -292,6 +291,8 @@ router.post('/downloadfile', async (req, res) => {
           console.log('BODY: ' + chunk);
         });
       }).end();
+    //res.sendStatus(200);
+    //const fieldListInfo = await CDTFieldList("#" + req.params.id);
     res.json(result);
 });
 
